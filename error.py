@@ -1,2 +1,0 @@
-class CustomExit(SystemExit):
-    pass
