@@ -1,0 +1,2 @@
+class CustomExit(SystemExit):
+    pass
