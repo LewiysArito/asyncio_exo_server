@@ -10,15 +10,16 @@ from schemas import EchoServerSettings
 
 class EchoServer:
     def __init__(self, event_loop: AbstractEventLoop, settings: EchoServerSettings):
-        self.echo_tasks: List[asyncio.Task] = []
         self.event_loop = event_loop
+        self.echo_tasks: List[asyncio.Task] = []
         self.settings = settings
         self.listener_task: asyncio.Task | None = None
         self.server_socket: socket.socket | None = None
 
     async def echo(self, connection: socket.socket):
         try:
-            while data := await self.event_loop.sock_recv(connection, 1024):
+            while (data := await self.event_loop.sock_recv(connection, 1024)) \
+                not in (b'\r\n', b'\xff\xfb\x06'):
                 await self.event_loop.sock_sendall(connection, data)
         except Exception as e:
             logger.exception(e)
