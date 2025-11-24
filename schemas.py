@@ -4,4 +4,5 @@ import dataclasses
 class EchoServerSettings:
     port: int
     timeout_time: int
+    host: str
 

@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  exo-server:
+    build:
+      context: .
+    container_name: exo-server
+    env_file:
+      - .env
+    environment:
+      - CONTAINERIZED=true
+    ports:
+      - "${EXTERNAL_PORT:-8356}:8356"
+    restart: unless-stopped
+    network_mode: "bridge"

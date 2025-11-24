@@ -1,11 +1,12 @@
-import logging
 import socket
 import asyncio
-from asyncio import AbstractEventLoop
 import signal
+
+import settings
+from settings import logger
+from asyncio import AbstractEventLoop
 from typing import List
 from schemas import EchoServerSettings
-import settings
 
 class EchoServer:
     def __init__(self, event_loop: AbstractEventLoop, settings: EchoServerSettings):
@@ -20,13 +21,13 @@ class EchoServer:
             while data := await self.event_loop.sock_recv(connection, 1024):
                 await self.event_loop.sock_sendall(connection, data)
         except Exception as e:
-            logging.exception(e)
+            logger.exception(e)
         finally:
-            logging.info(f"Connection close {connection}")
+            logger.info(f"Connection close {connection}")
             connection.close()
 
     def shutdown(self, signame: str):
-        logging.info(f"Received signal {signame}. Shutting down...")
+        logger.info(f"Received signal {signame}. Shutting down...")
         self.event_loop.create_task(self.close_and_stop())
 
     async def connection_listener(self, server_socket: socket.socket):
@@ -37,12 +38,12 @@ class EchoServer:
                 break
             
             connection.setblocking(False)
-            logging.info(f"New connection from {address}")
+            logger.info(f"New connection from {address}")
             task = self.event_loop.create_task(self.echo(connection))
             self.echo_tasks.append(task)
 
     async def close_and_stop(self):
-        logging.info("Closing echo tasks...")
+        logger.info("Closing echo tasks...")
         await self.close_echo_tasks()
 
         if self.server_socket:
@@ -58,18 +59,18 @@ class EchoServer:
             except asyncio.CancelledError:
                 pass
             except asyncio.TimeoutError:
-                logging.warning("Timeout while closing echo task")
+                logger.warning("Timeout while closing echo task")
 
     async def main(self):
         self.server_socket = socket.socket()
         self.server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
-        server_address = ('127.0.0.1', self.settings.port)
+        server_address = (self.settings.host, self.settings.port)
         self.server_socket.setblocking(False)
         self.server_socket.bind(server_address)
         self.server_socket.listen()
 
-        logging.info(f"Server was running {server_address}. Waiting connections...")
+        logger.info(f"Server was running {server_address}. Waiting connections...")
 
         for signame in ["SIGINT", "SIGTERM"]:
             self.event_loop.add_signal_handler(
@@ -79,9 +80,7 @@ class EchoServer:
 
         await self.connection_listener(self.server_socket)
 
-
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO)
     server_settings = settings.get_server_settings()
 
     event_loop = asyncio.new_event_loop()
@@ -96,4 +95,4 @@ if __name__ == "__main__":
     except RuntimeError:
         pass
     finally:
-        logging.info("Echo server has terminated")
+        logger.info("Echo server has terminated")
