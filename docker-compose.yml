@@ -11,5 +11,6 @@ services:
       - CONTAINERIZED=true
     ports:
       - "${EXTERNAL_PORT:-8356}:8356"
+      - "${EXTERNAL_PORT_METRICS:-8000}:8000"
     restart: unless-stopped
-    network_mode: "bridge"
+    network_mode: bridge

@@ -13,6 +13,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     && rm -rf /var/lib/apt/lists/*
 
+ADD https://astral.sh/uv/install.sh /uv-installer.sh
+RUN sh /uv-installer.sh && rm /uv-installer.sh
+    
 COPY . .
 
-CMD [ "python", "main.py" ]
+ENV PATH="/root/.local/bin/:$PATH"
+RUN uv sync --no-dev --inexact
+
+CMD ["uv", "run", "main.py"]

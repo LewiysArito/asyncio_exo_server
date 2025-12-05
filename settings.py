@@ -28,9 +28,11 @@ def get_server_settings()->EchoServerSettings:
     is_container = str(os.getenv("CONTAINERIZED")).lower() == "true"
 
     PORT = int(os.getenv("PORT", 8356) if not is_container else 8356)
+    PORT_METRICS = int(os.getenv("PORT", 8000) if not is_container else 8000)
     HOST = "0.0.0.0" if is_container else "127.0.0.1"
     TIMEOUT_TIME = int(os.getenv("TIMEOUT_TIME") or 2)
     
-    return EchoServerSettings(**{"port": PORT, "timeout_time": TIMEOUT_TIME, "host": HOST})
+    return EchoServerSettings(**{"port": PORT, 
+        "timeout_time": TIMEOUT_TIME, "host": HOST, "port_metrics": PORT_METRICS})
 
 logger = initialize_logger()
