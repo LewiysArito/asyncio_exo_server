@@ -6,6 +6,5 @@ __pycache__/*
 docker*.yml
 .gitlab-ci.yml
 .pre-commit-config.yaml
-
 .idea
 .vscode
