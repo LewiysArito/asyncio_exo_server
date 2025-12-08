@@ -21,4 +21,5 @@ COPY . .
 ENV PATH="/root/.local/bin/:$PATH"
 RUN uv sync --no-dev --inexact
 
-CMD ["uv", "run", "main.py"]
+CMD ["uv", "run", "-m", "src.main"]
+

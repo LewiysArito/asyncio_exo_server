@@ -3,11 +3,11 @@ from prometheus_client import (
 )
 from aiohttp import web
 
-COUNT_ACTIVE_USERS = Gauge("active_users", "Active user connections")
-COUNT_REQUESTS = Counter("requests_total", "Total incoming requests")
-COUNT_CONNECTIONS = Counter("connections_total", "Total connections created")
-BYTE_SENT = Histogram("bytes_sent", "Bytes sent per request", buckets=(100, 500, 1000, 5000, 10000))
-SERVICE_STARTS = Counter("service_starts_total","How many times this service has been started")
+COUNT_ACTIVE_USERS = Gauge("echo_server_active_users", "Active user connections")
+COUNT_REQUESTS = Counter("echo_server_requests_total", "Total incoming requests")
+COUNT_CONNECTIONS = Counter("echo_server_connections_total", "Total connections created")
+BYTE_RECEIVED = Histogram("echo_server_bytes_received_total", "Total bytes received by the server", buckets=(100, 500, 1000, 5000, 10000))
+SERVICE_STARTS = Counter("echo_server_service_starts_total","How many times this service has been started")
 
 async def metrics(request):
     return web.Response(

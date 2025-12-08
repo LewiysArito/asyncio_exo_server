@@ -1,7 +1,7 @@
 import os
 import logging
 
-from schemas import EchoServerSettings
+from src.schemas import EchoServerSettings
 
 def initialize_logger() -> logging.Logger:
     LOG_LEVEL_NAME = os.getenv("LOG_LEVEL", "INFO").upper()

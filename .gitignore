@@ -6,8 +6,11 @@ __pycache__
 *.log
 text_prompt.txt
 .DS_Store
+.python-version
 .pithon-version
 .uv-cache/
 __pycache__/
 build/
 dist/
+prometheusdata/
+grafanadata/

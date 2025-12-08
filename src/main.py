@@ -2,18 +2,18 @@ import socket
 import asyncio
 import signal
 
-import settings
-from metrics import (
+import src.settings as settings
+from src.metrics import (
     COUNT_CONNECTIONS,
     SERVICE_STARTS,
     start_metrics_server,
-    BYTE_SENT,
+    BYTE_RECEIVED,
     COUNT_ACTIVE_USERS
 )
-from settings import logger
+from src.settings import logger
 from asyncio import AbstractEventLoop
 from typing import List
-from schemas import EchoServerSettings
+from src.schemas import EchoServerSettings
 
 class EchoServer:
     def __init__(self, event_loop: AbstractEventLoop, settings: EchoServerSettings):
@@ -27,6 +27,8 @@ class EchoServer:
         try:
             while True:
                 data = await self.event_loop.sock_recv(connection, 1024)
+                BYTE_RECEIVED.observe(len(data))
+                
                 if data in (b"\r\n", b"\xff\xfb\x06"):
                     break
         except Exception as e:
