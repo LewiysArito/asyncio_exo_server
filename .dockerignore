@@ -8,3 +8,4 @@ docker*.yml
 .pre-commit-config.yaml
 .idea
 .vscode
+k6/

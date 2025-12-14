@@ -14,3 +14,5 @@ build/
 dist/
 prometheusdata/
 grafanadata/
+node_modules/
+k6

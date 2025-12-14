@@ -1,0 +1,16 @@
+{
+  "name": "asyncio_exo_server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "LewiysArito",
+  "license": "ISC",
+  "type": "module",
+  "devDependencies": {
+    "@types/k6": "^1.4.0"
+  }
+}
