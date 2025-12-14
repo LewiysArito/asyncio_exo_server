@@ -1,0 +1,119 @@
+{
+  "annotations": { "list": [] },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "panels": [
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": { "defaults": {}, "overrides": [] },
+      "gridPos": { "h": 5, "w": 6, "x": 0, "y": 0 },
+      "id": 1,
+      "options": {},
+      "targets": [ { "expr": "echo_server_active_users", "refId": "A" } ],
+      "title": "Active Users",
+      "type": "stat"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": { "defaults": {}, "overrides": [] },
+      "gridPos": { "h": 6, "w": 12, "x": 6, "y": 0 },
+      "id": 2,
+      "options": {},
+      "targets": [ { "expr": "rate(echo_server_requests_total[1m])", "refId": "A" } ],
+      "title": "Requests / sec",
+      "type": "timeseries"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": { "defaults": {}, "overrides": [] },
+      "gridPos": { "h": 5, "w": 6, "x": 0, "y": 5 },
+      "id": 3,
+      "options": {},
+      "targets": [ { "expr": "rate(echo_server_connections_total[1m])", "refId": "A" } ],
+      "title": "Connections / sec",
+      "type": "timeseries"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": { "defaults": {}, "overrides": [] },
+      "gridPos": { "h": 5, "w": 6, "x": 6, "y": 6 },
+      "id": 4,
+      "options": {},
+      "targets": [ { "expr": "echo_server_service_starts_total", "refId": "A" } ],
+      "title": "Service Starts (total)",
+      "type": "stat"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": { "defaults": {}, "overrides": [] },
+      "gridPos": { "h": 6, "w": 6, "x": 0, "y": 10 },
+      "id": 5,
+      "options": {},
+      "targets": [ { "expr": "echo_server_app_cpu_percent", "refId": "A" } ],
+      "title": "App CPU %",
+      "type": "timeseries"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": { "defaults": {}, "overrides": [] },
+      "gridPos": { "h": 6, "w": 6, "x": 6, "y": 10 },
+      "id": 6,
+      "options": {},
+      "targets": [ { "expr": "echo_server_app_memory_bytes", "refId": "A" } ],
+      "title": "App Memory (RSS)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": { "defaults": {}, "overrides": [] },
+      "gridPos": { "h": 6, "w": 12, "x": 0, "y": 16 },
+      "id": 7,
+      "options": {},
+      "targets": [
+        {
+          "expr": "rate(echo_server_bytes_received_total_sum[1m]) / rate(echo_server_bytes_received_total_count[1m])",
+          "refId": "A"
+        }
+      ],
+      "title": "Avg bytes / request (1m)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": { "defaults": {}, "overrides": [] },
+      "gridPos": { "h": 6, "w": 12, "x": 12, "y": 0 },
+      "id": 8,
+      "options": {},
+      "targets": [
+        { "expr": "histogram_quantile(0.50, sum(rate(echo_server_bytes_received_total_bucket[5m])) by (le))", "refId": "A" },
+        { "expr": "histogram_quantile(0.95, sum(rate(echo_server_bytes_received_total_bucket[5m])) by (le))", "refId": "B" },
+        { "expr": "histogram_quantile(0.99, sum(rate(echo_server_bytes_received_total_bucket[5m])) by (le))", "refId": "C" }
+      ],
+      "title": "Request size percentiles (P50/P95/P99)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": { "defaults": {}, "overrides": [] },
+      "gridPos": { "h": 5, "w": 12, "x": 0, "y": 22 },
+      "id": 9,
+      "options": {},
+      "targets": [ { "expr": "rate(echo_server_bytes_received_total_sum[1m])", "refId": "A" } ],
+      "title": "Bytes received / sec",
+      "type": "timeseries"
+    }
+  ],
+  "schemaVersion": 36,
+  "style": "dark",
+  "tags": ["asyncio", "echo-server"],
+  "templating": { "list": [] },
+  "time": { "from": "now-1h", "to": "now" },
+  "timepicker": {},
+  "timezone": "",
+  "title": "Asyncio Echo Server - Metrics",
+  "uid": "async-echo-server",
+  "version": 1
+}

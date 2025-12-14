@@ -29,7 +29,6 @@ def collect_system_metrics():
         CPU_USAGE.set(cpu_percent)
         memory_usage = psutil.Process().memory_info().rss
         MEMORY_USAGE.set(memory_usage)
-        logger.error(str(cpu_percent) + " "+ str(memory_usage))
         time.sleep(0.5)
 
 async def start_metrics_server(host: str, port:int):
