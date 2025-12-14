@@ -5,8 +5,6 @@ services:
     container_name: exo-server
     env_file:
       - .env
-    volume:
-      .app.log:/app.log
     environment:
       - CONTAINERIZED=true
     ports:

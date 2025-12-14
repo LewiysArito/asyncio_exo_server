@@ -27,15 +27,27 @@ class EchoServer:
         try:
             while True:
                 data = await self.event_loop.sock_recv(connection, 1024)
+                if not data or data in (b"\r\n", b"\xff\xfb\x06"):
+                    break
+
                 BYTE_RECEIVED.observe(len(data))
-                
-                if data in (b"\r\n", b"\xff\xfb\x06"):
+
+                try:
+                    await self.event_loop.sock_sendall(connection, data)
+                except Exception:
                     break
         except Exception as e:
             logger.exception(e)
         finally:
             logger.info(f"Connection close {connection}")
-            COUNT_ACTIVE_USERS.dec(1)
+            
+            try:
+                COUNT_ACTIVE_USERS.dec(1)
+            except Exception:
+                try:
+                    COUNT_ACTIVE_USERS.dec()
+                except Exception:
+                    pass
             connection.close()
 
     def shutdown(self, signame: str):

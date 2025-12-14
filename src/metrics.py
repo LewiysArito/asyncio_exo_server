@@ -10,7 +10,7 @@ from src.settings import logger
 COUNT_ACTIVE_USERS = Gauge("echo_server_active_users", "Active user connections")
 COUNT_REQUESTS = Counter("echo_server_requests_total", "Total incoming requests")
 COUNT_CONNECTIONS = Counter("echo_server_connections_total", "Total connections created")
-BYTE_RECEIVED = Histogram("echo_server_bytes_received_total", "Total bytes received by the server", buckets=(100, 500, 1000, 5000, 10000))
+BYTE_RECEIVED = Histogram("echo_server_bytes_received_total", "Total bytes received by the server", buckets=(10, 25, 50, 100))
 SERVICE_STARTS = Counter("echo_server_service_starts_total","How many times this service has been started")
 CPU_USAGE = Gauge('echo_server_app_cpu_percent', 'CPU usage percent')
 MEMORY_USAGE = Gauge('echo_server_app_memory_bytes', 'Memory usage in bytes')
