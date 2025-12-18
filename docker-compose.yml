@@ -12,7 +12,7 @@ services:
       - "${EXTERNAL_PORT_METRICS:-8000}:8000"
     restart: unless-stopped
     networks: 
-      - exo-serve-network
+      - exo-server-network
 
   prometheus:
     image: prom/prometheus:latest
@@ -25,7 +25,7 @@ services:
     depends_on:
       - exo-server
     networks: 
-      - exo-serve-network
+      - exo-server-network
 
   grafana:
     image: grafana/grafana:latest
@@ -41,10 +41,11 @@ services:
     depends_on:
       - prometheus
     networks: 
-      - exo-serve-network
+      - exo-server-network
 
 networks:
-  exo-serve-network: 
+  exo-server-network: 
+    name: exo-server-network
     driver: bridge
 
 volumes:

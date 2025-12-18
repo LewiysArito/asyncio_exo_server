@@ -57,7 +57,7 @@ export default () => {
     return randomString;
   }
 
-  const address = `localhost:${PORT}`;
+  const address = `exo-server:${PORT}`;
   const randomString = createRandomString()
   const message = `${randomString}\r\n`
 

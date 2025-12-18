@@ -1,0 +1,15 @@
+services:
+  loadgen:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: loadgen
+    networks:
+      - exo-server-network
+    mem_limit: 512m
+    cpus: 1.0
+    command: ["run", "/scripts/tcp_test.js"]
+
+networks:
+  exo-server-network:
+    external: true
